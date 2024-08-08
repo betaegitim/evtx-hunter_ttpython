@@ -5,8 +5,10 @@ import dash
 from helpers.evtx_loader import EvtxLoader
 from helpers import utils
 from graphing import table, histogram
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import dcc
+from dash import html
+# import dash_html_components as html
+# import dash_core_components as dcc
 from datetime import date, datetime
 
 
@@ -25,11 +27,11 @@ def main():
     vars.EXTERNAL_DIR = vars.PROJECT_ROOT_DIR + "/../external/"
     vars.RULE_DIR = vars.PROJECT_ROOT_DIR + "/../rules/"
 
-    parser = argparse.ArgumentParser(description="Dump a binary EVTX file into XML.")
-    parser.add_argument("evtx_folder", type=str,
-                        help="Path to the Windows EVTX event log file folder")
+    # parser = argparse.ArgumentParser(description="Dump a binary EVTX file into XML.")
+    # parser.add_argument("evtx_folder", type=str,
+    #                     help="Path to the Windows EVTX event log file folder")
 
-    args = parser.parse_args()
+    # args = parser.parse_args()
 
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
     vars.DASH_APP = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -38,7 +40,7 @@ def main():
     utils.remove_all_tmp_json_files()
     utils.load_event_id_mappings()
 
-    evtxloader = EvtxLoader(args.evtx_folder)
+    evtxloader = EvtxLoader("/Users/ibrahimediz/Desktop/evtx-hunter-main/app/data")
     evtxloader.load_evtx_files()
 
     logger.info("generating graphs and building models, this can take a while")
@@ -104,4 +106,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    vars.DASH_APP.run_server(debug=False)
+    vars.DASH_APP.run_server(debug=True)
